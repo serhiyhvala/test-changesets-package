@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    name: Release Khvala Packages
+    runs-on: ubuntu-latest
+    continue-on-error: false
+    permissions:
+      actions: write
+      contents: write
+      id-token: write
+      pull-requests: write
+    outputs:
+      releaseReady: ${{ steps.releaseOutputs.outputs.releaseReady }}
+    steps:
+      - name: Cancel previous jobs
+        uses: styfle/cancel-workflow-action@0.12.1
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare node
+        uses: ./.github/actions/prepare-node
+        id: prepare-node
+        with:
+          node-version: 20
+          node-cache: 'pnpm'
+          package-manager: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Ensure npm CLI supports trusted publishing
+        shell: bash
+        run: |
+          # pnpm publish uses npm publish under the hood
+          # Update npm to 11.5.1+ for OIDC trusted publishing support
+          # See: https://github.com/pnpm/pnpm/issues/9812
+          npm install -g npm@latest
+
+      - name: Create Release or publish to NPM Registry
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          publish: pnpm changes:release
+          title: 'ci(changesets): :package: version update for packages'
+          commit: 'chore(release): version update for packages'
+          setupGitUser: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_CONFIG_PROVENANCE: false
+
+      - name: Generate outputs
+        shell: bash
+        id: releaseOutputs
+        if: steps.changesets.outputs.published == 'true'
+        run: echo "releaseReady=true" >> $GITHUB_OUTPUT
