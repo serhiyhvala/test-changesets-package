@@ -1,5 +1,11 @@
 # test-changesets-package
 
+## 2.0.2
+
+### Patch Changes
+
+- Add another log and add some github actions
+
 ## 2.0.1
 
 ### Patch Changes
