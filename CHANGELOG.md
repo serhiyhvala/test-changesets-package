@@ -1,5 +1,11 @@
 # test-changesets-package
 
+## 2.1.0
+
+### Minor Changes
+
+- add minor changes
+
 ## 2.0.2
 
 ### Patch Changes
