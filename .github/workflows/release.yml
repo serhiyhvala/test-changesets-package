@@ -48,7 +48,6 @@ jobs:
           publish: pnpm changes:release
           title: 'ci(changesets): :package: version update for packages'
           commit: 'chore(release): version update for packages'
-          setupGitUser: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_PROVENANCE: false
