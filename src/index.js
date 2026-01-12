@@ -5,4 +5,5 @@ export const hello = () => {
   console.log('process.env.NODE_ENV from Github Actions');
   console.log(process.env.NODE_ENV);
   console.log(process.env.NODE_ENV);
+  console.log('TRY WITH PR')
 };
