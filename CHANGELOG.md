@@ -1,5 +1,11 @@
 # test-changesets-package
 
+## 2.1.1
+
+### Patch Changes
+
+- 41fcc4a: Try using custom pr with changeset action
+
 ## 2.1.0
 
 ### Minor Changes
