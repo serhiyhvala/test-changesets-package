@@ -1,5 +1,11 @@
 # test-changesets-package
 
+## 3.0.0
+
+### Major Changes
+
+- a21f50f: test
+
 ## 2.1.1
 
 ### Patch Changes
